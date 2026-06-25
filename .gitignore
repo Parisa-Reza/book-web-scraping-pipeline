@@ -1,0 +1,23 @@
+# --- Virtual Environment ---
+venv/
+ENV/
+env/
+
+# --- Python & Compilation Artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+
+# --- Scrapy & Scrapyd Local Run Artifacts ---
+.scrapy/
+.pytest_cache/
+eggs/
+logs/
+dbs/
+items/
+
+# --- Operating System Files ---
+.DS_Store
+Thumbs.db
