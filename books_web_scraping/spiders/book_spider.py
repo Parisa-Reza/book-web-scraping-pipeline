@@ -1,5 +1,6 @@
 import scrapy
 import random
+from urllib.parse import urljoin
 from books_web_scraping.items import BooksWebScrapingItem
 
 class BookSpider(scrapy.Spider):
@@ -25,12 +26,13 @@ class BookSpider(scrapy.Spider):
         """
         Collect all book html selector card objects across pagination. Once all pages are collected, we pick 5 random cards and extract fields.
         """
-  
+        # When there are multiple pages, Scrapy passes the previous books through meta and ig nothing xits [] is created
         all_book_cards = response.meta.get('accumulated_cards', [])
         
         # category name from the main header text
         category_name = response.css(".page-header h1::text").get()
         if category_name:
+            #Removing extra spaces
             category_name = category_name.strip()
 
         #  all book article cards on this specific page
@@ -39,7 +41,7 @@ class BookSpider(scrapy.Spider):
         # Store the actual HTML response snippet for each card so we can parse them later
         for card in current_page_cards:
             all_book_cards.append({
-                'html_snippet': card.get(),
+                'html_snippet': card.get(), # complete HTML of that book.
                 'base_url': response.url,
                 'category': category_name
             })
@@ -70,6 +72,7 @@ class BookSpider(scrapy.Spider):
             # Extract the 6 fields from the selected card elements
             for card_data in selected_cards:
               
+            #single book's HTML separately.
                 card_selector = scrapy.Selector(text=card_data['html_snippet'])
                 
                 item = BooksWebScrapingItem()
@@ -86,10 +89,10 @@ class BookSpider(scrapy.Spider):
 
               
                 raw_href = card_selector.css("h3 a::attr(href)").get()
-                item["product_url"] = scrapy.utils.url.urljoin_rfc(card_data['base_url'], raw_href) if raw_href else None
-
+                item["product_url"] = urljoin(card_data['base_url'], raw_href) if raw_href else None
+                # final url looks like this https://books.toscrape.com/catalogue/its-only-the-himalayas_981/index.html
     
                 raw_img = card_selector.css(".image_container img::attr(src)").get()
-                item["image_url"] = scrapy.utils.url.urljoin_rfc(card_data['base_url'], raw_img) if raw_img else None
-
+                item["image_url"] = urljoin(card_data['base_url'], raw_img) if raw_img else None
+                #final url looks like this	https://books.toscrape.com/media/cache/27/a5/27a53d0bb95bdd88288eaf66c9230d7e.jpg
                 yield item
