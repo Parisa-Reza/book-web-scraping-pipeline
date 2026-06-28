@@ -49,3 +49,7 @@ htmlcov/
 # --- Operating System Files ---
 .DS_Store
 Thumbs.db
+
+
+docker-data/
+docker-output/

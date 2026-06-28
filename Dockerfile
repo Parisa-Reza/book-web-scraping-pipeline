@@ -28,14 +28,22 @@ RUN apk --no-cache add --virtual build-dependencies \
     libxml2 \
     libxslt
 
-# Mount two volumes /etc/scrapyd/ for Configuration and /var/lib/scrapyd/ for Scrapyd data, jobs, logs, eggs
-VOLUME /etc/scrapyd/ /var/lib/scrapyd/
+WORKDIR /app
 
-# Copy scrapyd.conf inside container
-COPY ./scrapyd.conf /etc/scrapyd/
-RUN mkdir -p /src/eggs/books_web_scraping 
-COPY --from=build-stage /workdir/books_web_scraping.egg /src/eggs/books_web_scraping/1.egg 
-# Scrapyd stores project versions as egg files like 1.egg, 2.egg
+ENV SCRAPY_OUTPUT_BASE=/app
+
+COPY ./scrapyd.conf /etc/scrapyd/scrapyd.conf
+
+RUN sed -i "s/bind_address = 127.0.0.1/bind_address = 0.0.0.0/" /etc/scrapyd/scrapyd.conf \
+ && sed -i "s|items_dir = .scrapyd/items|items_dir =|" /etc/scrapyd/scrapyd.conf \
+ && mkdir -p \
+    /app/.scrapyd/eggs/books_web_scraping \
+    /app/.scrapyd/logs \
+    /app/.scrapyd/dbs \
+    /app/output \
+    /app/data
+
+COPY --from=build-stage /workdir/books_web_scraping.egg /app/.scrapyd/eggs/books_web_scraping/1.egg
 
 EXPOSE 6800
 ENTRYPOINT ["scrapyd", "--pidfile="]
