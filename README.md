@@ -2,7 +2,13 @@
 
 ## Project Overview
 
-This project has been built to scrape book data from `books.toscrape.com`. The data has been collected by a Scrapy spider, cleaned by a pipeline, exported into JSON, CSV, and XML files, and saved into a SQLite database.
+This project has been built to scrape book data from `https://books.toscrape.com/index.html`. The data has been collected by a Scrapy spider, cleaned by a pipeline, exported into JSON, CSV, and XML files, and saved into a SQLite database.
+
+## Quick Preview
+<img width="1138" height="218" alt="Capture3" src="https://github.com/user-attachments/assets/2166c1b1-28a6-4a6e-a32f-4db7fee88aaf" />
+<img width="840" height="650" alt="Capture2" src="https://github.com/user-attachments/assets/07ab0126-c0dc-4717-9790-ce31debf1e01" />
+<img width="847" height="604" alt="Capture1" src="https://github.com/user-attachments/assets/17e3148b-9ce6-48fc-9aad-b3477da6d14e" />
+<img width="835" height="652" alt="Capture" src="https://github.com/user-attachments/assets/910ac43d-173c-49d7-ae53-cefe43b84335" />
 
 ## Features
 
