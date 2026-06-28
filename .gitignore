@@ -1,22 +1,50 @@
-# --- Virtual Environment ---
+# --- Virtual Environments ---
+.venv/
 venv/
-ENV/
+venv*/
 env/
+ENV/
 
-# --- Python & Compilation Artifacts ---
+# --- Python Caches & Compilation Artifacts ---
 __pycache__/
 *.py[cod]
 *$py.class
+.python-version
+
+# --- Packaging & Build Artifacts ---
+build/
+dist/
 *.egg-info/
 *.egg
+pip-wheel-metadata/
 
-# --- Scrapy & Scrapyd Local Run Artifacts ---
+# --- Scrapy & Scrapyd Local Artifacts ---
 .scrapy/
-.pytest_cache/
+.scrapyd/
 eggs/
 logs/
 dbs/
 items/
+
+# --- Crawl Outputs & Local Databases ---
+output/
+data/
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Test & Tool Caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Editor & IDE Files ---
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # --- Operating System Files ---
 .DS_Store
